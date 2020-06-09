@@ -4,9 +4,10 @@ import TableGame from './table-game';
 
 const Game = () => {
     const [state, setState] = useState({
-        player1: "aa",
-        player2: "bb",
-        jugada: "X",
+        player1: null,
+        player2: null,
+        jugada: null,
+        turno: true,
     })
 
     const handleChange = e => {
@@ -29,7 +30,19 @@ const Game = () => {
 
     const handleChangeJugada = () => {
         let data = {
-            jugada: state.jugada === "X" ? "O" : "X"
+            jugada: state.jugada === "X" ? "O" : "X",
+            turno: !state.turno
+        }
+        setState(prevState => {
+            return { ...prevState, ...data }
+        })
+    }
+
+    const reset = () => {
+        let data = {
+            player1: null,
+            player2: null,
+            jugada: null
         }
         setState(prevState => {
             return { ...prevState, ...data }
@@ -44,7 +57,7 @@ const Game = () => {
                     (
                         <FormGame handleChange={handleChange} handleClick={handleClick} />
                     ) : (
-                        <TableGame {...state} handleChangeJugada={handleChangeJugada}/>
+                        <TableGame {...state} handleChangeJugada={handleChangeJugada} reset={reset}/>
                     )
             }
         </>
